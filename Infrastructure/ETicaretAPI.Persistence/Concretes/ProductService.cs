@@ -11,6 +11,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Twilio;
+using Twilio.Rest.Api.V2010.Account;
+using Twilio.Types;
 
 namespace ETicaretAPI.Persistence.Concretes
 {
@@ -58,6 +61,19 @@ namespace ETicaretAPI.Persistence.Concretes
             await smtp.AuthenticateAsync(_configuration.GetSection("EmailUsername").Value, _configuration.GetSection("EmailPassword").Value);
             await smtp.SendAsync(email);
             await smtp.DisconnectAsync(true);
+        }
+
+        public async Task SendSms()
+        {
+            var accountSid = "ACfd1126bca4b01ba37db773587308abff";
+            var authToken = "369e8f05d98f174feb671d6411579181";
+            TwilioClient.Init(accountSid, authToken);
+            var messageOptions = new CreateMessageOptions(
+                new PhoneNumber("+905326254522"));
+            messageOptions.Body = "This is SMS body!";
+            messageOptions.From = "+19806554864";
+            var message = await MessageResource.CreateAsync(messageOptions);
+            var messageBody = message.Body;
         }
     }
 }

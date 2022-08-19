@@ -12,6 +12,7 @@ namespace ETicaretAPI.Application.Abstractions
         List<Product> GetProducts();
         public Task<bool> AddSingleRequest(RequestLog requestLog);
         public Task SendEmail();
+        public Task SendSms();
         public Task<bool> SaveAsync();
     }
 }

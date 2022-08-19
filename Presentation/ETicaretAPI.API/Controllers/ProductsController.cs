@@ -40,6 +40,7 @@ namespace ETicaretAPI.API.Controllers
                 {
                     await _productService.SendEmail();
                     await _productService.AddSingleRequest(new RequestLog() { Id = Guid.NewGuid(), CreatedDate = DateTime.Now, IsSuccessfull = true });
+                    await _productService.SendSms();
                     await file.WriteLineAsync("*****   Success!   *****" + dataToString);
                     file.Close();
                     
@@ -48,6 +49,7 @@ namespace ETicaretAPI.API.Controllers
                 {
                     await _productService.SendEmail();
                     await _productService.AddSingleRequest(new RequestLog() { Id = Guid.NewGuid(), CreatedDate = DateTime.Now, IsSuccessfull = false });
+                    await _productService.SendSms();
                     await file.WriteLineAsync("*****   Error!   *****\n" + "Failed to send request!");
                     file.Close();
                 }
